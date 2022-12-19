@@ -2,17 +2,16 @@ const router = require('express').Router();
 const { Post, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     const postsData = await Post.findAll({
       include: [
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['userame'],
         },
       ],
     });
-
     const posts = postsData.map((post) => post.get({ plain: true }));
     res.render('homepage', {
       posts,
@@ -22,13 +21,13 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get('/post/:id', async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
       include: [
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['username'],
         },
       ],
     });
