@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { Post, User } = require('../models');
+// eslint-disable-next-line no-unused-vars
+const { Post, User, Comment} = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', withAuth, async (req, res) => {
@@ -29,6 +30,10 @@ router.get('/post/:id', withAuth, async (req, res) => {
           model: User,
           attributes: ['username'],
         },
+        {
+          model: Comment,
+          include: [User],
+        }
       ],
     });
     const post = postData.get({ plain: true });

@@ -1,10 +1,19 @@
-<div class="text-center auto">
+<div class="text-center post" data-post="{{id}}">
     <h2>{{title}}</h2>
     <p>{{content}}</p>
     <p>Created by {{user.username}} on {{format_date date_created}}</p>
 </div>
+{{#each comments as |comment|}}
+<div>
+    <div>
+        {{comment.user_comment}}
+        {{comment.user.username}}
+    </div>
+</div>
+{{/each}}
 <div>
     Comment
-    <textarea></textarea>
+    <textarea id="new-comment"></textarea>
     <button class="btn btn-primary">Submit</button>
 </div>
+<script src="/public/js/newComment.js"></script>
